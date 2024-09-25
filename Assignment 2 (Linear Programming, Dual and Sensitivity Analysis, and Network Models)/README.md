@@ -1,4 +1,4 @@
-# Assignment 2: Linear Programming Problems
+# Assignment 2: Linear Programming, Dual and Sensitivity Analysis, and Network Models Problems
 
 ## Assignment Overview
 
