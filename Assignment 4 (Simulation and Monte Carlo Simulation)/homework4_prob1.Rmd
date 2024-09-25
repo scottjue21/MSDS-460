@@ -1,0 +1,65 @@
+---
+title: "MSDS460_homework4"
+output: html_document
+---
+
+```{r prob 1a ,1b, 1c}
+library(knitr)
+
+set.seed(123)
+
+insidecircle <- function(x,y){
+  ifelse(x^2 + y^2 <= 1,return(1),return(0))
+}
+
+estimatepi <- function(n){
+  x <- runif(n)
+  y <- runif(n)
+  df <- data.frame(x=x,y=y)
+  df$insidecircle <- apply(df,1,function(x) insidecircle(x[1],x[2]))
+  
+  pi_estimate <- 4*sum(df$insidecircle)/length(df$insidecircle)
+  se <- sd(df$insidecircle)
+  pi_se <- 4*se
+  ci_95 <- (1.96*pi_se)/sqrt(length(df$insidecircle))
+  
+  return(list(pi=pi_estimate,std_error=pi_se,ci_95=ci_95))
+}
+
+results <- data.frame(n=c(),pi_estimate=c(),std_error=c(),upper=c(),lower=c())
+for(n in seq(1000,10000,by=500)){
+  pi <- estimatepi(n)
+  results <- rbind(results,c(n,pi$pi,pi$std_error,
+                             pi$pi+pi$ci_95,pi$pi-pi$ci_95))
+}
+
+colnames(results) <- c("n","Pi estimate", "std. error", "upper", "lower")
+
+
+kable(results)
+```
+
+```{r 1d}
+set.seed(123)
+n=1500
+
+results2 <- data.frame(pi_estimate=c(), std_error=c(), lower=c(), upper=c(), n=c())
+
+for(k in 1:500){
+  resPi <-estimatepi(n)
+  results2 <- rbind(results2, data.frame(pi_estimate=resPi$pi, se=resPi$std_error, ci_95=resPi$ci_95, n=n))
+}
+
+hist(results2$pi)
+
+stdev_estimates <- sd(results2$pi_est)
+
+lower <- sum(results2$pi_est < 3.055430)
+upper <- sum(results2$pi_est > 3.221903)
+
+pct_ci95 <- ((500-(lower+upper))/500)*100
+
+cat("Standard error of estimates: ", stdev_estimates)
+cat("\n")
+cat("Percentage of the estimates that lie within the 95% CI: ", pct_ci95, "%")
+```
