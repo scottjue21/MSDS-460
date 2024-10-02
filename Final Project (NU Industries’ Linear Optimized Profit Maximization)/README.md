@@ -21,3 +21,12 @@ To tackle this problem, the project employed **linear programming** and the **si
 ## Conclusion
 
 This project demonstrates the effectiveness of linear programming in addressing complex profit maximization scenarios within a manufacturing context. The insights gained from this analysis provide actionable recommendations to enhance NU Industries' profitability and operational efficiency.
+
+### Contributors
+
+This project was a collaborative effort by the following team members:
+
+- Jordan Berge
+- David Caban
+- Jared Sarabia
+- Scott Jue
